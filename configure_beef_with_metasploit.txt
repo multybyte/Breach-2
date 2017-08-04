@@ -1,0 +1,11 @@
+so i learned this new thing
+
+leafpad /etc/beef-xss/config.yaml 
+set Metasploit from false to true
+
+leafpad /usr/share/beef-xss/extensions/metasploit/config.yaml
+set host and call  ip to our own attacking ip address
+
+
+Then in msfconsole -->
+load msgrpc ServerHost=<our-own-attacking-ip>

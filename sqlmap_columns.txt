@@ -1,0 +1,10 @@
+Database: oscommerce
+Table: osc_administrators
+[3 columns]
++---------------+--------------+
+| Column        | Type         |
++---------------+--------------+
+| id            | int(11)      |
+| user_name     | varchar(255) |
+| user_password | varchar(40)  |
++---------------+--------------+

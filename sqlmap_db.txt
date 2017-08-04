@@ -1,0 +1,11 @@
+--dbs <--- tell al databases
+
+available databases [5]:
+[*] blog
+[*] information_schema
+[*] mysql
+[*] oscommerce
+[*] performance_schema
+------------------------------------------------------
+
+

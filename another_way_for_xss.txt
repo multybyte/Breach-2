@@ -1,0 +1,12 @@
+after reading solution i learned again new thing
+
+also can use this ---->
+
+<img src='http://192.168.110.151'>
+or
+<img src='http://192.168.110.151:port'>
+
+then in terminal --->
+
+nc -lvp <port>
+

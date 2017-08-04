@@ -1,0 +1,62 @@
+database: oscommerce
+[57 tables]
++-------------------------------------------+
+| osc_address_book                          |
+| osc_administrators                        |
+| osc_administrators_access                 |
+| osc_administrators_log                    |
+| osc_banners                               |
+| osc_banners_history                       |
+| osc_categories                            |
+| osc_categories_description                |
+| osc_configuration                         |
+| osc_configuration_group                   |
+| osc_counter                               |
+| osc_countries                             |
+| osc_credit_cards                          |
+| osc_currencies                            |
+| osc_customers                             |
+| osc_geo_zones                             |
+| osc_languages                             |
+| osc_languages_definitions                 |
+| osc_manufacturers                         |
+| osc_manufacturers_info                    |
+| osc_newsletters                           |
+| osc_newsletters_log                       |
+| osc_orders                                |
+| osc_orders_products                       |
+| osc_orders_products_download              |
+| osc_orders_products_variants              |
+| osc_orders_status                         |
+| osc_orders_status_history                 |
+| osc_orders_total                          |
+| osc_orders_transactions_history           |
+| osc_orders_transactions_status            |
+| osc_product_attributes                    |
+| osc_products                              |
+| osc_products_description                  |
+| osc_products_images                       |
+| osc_products_images_groups                |
+| osc_products_notifications                |
+| osc_products_to_categories                |
+| osc_products_variants                     |
+| osc_products_variants_groups              |
+| osc_products_variants_values              |
+| osc_reviews                               |
+| osc_sessions                              |
+| osc_shipping_availability                 |
+| osc_shopping_carts                        |
+| osc_shopping_carts_custom_variants_values |
+| osc_specials                              |
+| osc_tax_class                             |
+| osc_tax_rates                             |
+| osc_templates                             |
+| osc_templates_boxes                       |
+| osc_templates_boxes_to_pages              |
+| osc_weight_classes                        |
+| osc_weight_classes_rules                  |
+| osc_whos_online                           |
+| osc_zones                                 |
+| osc_zones_to_geo_zones                    |
++-------------------------------------------+
+

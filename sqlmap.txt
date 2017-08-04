@@ -1,0 +1,19 @@
+so i learned about basics of sqlmap
+
+--dbs <--- check databases
+
+-D dbname
+
+--table <-- check tables
+
+-D dbname -T tablename
+
+--columns <-- check all columns
+
+-D dbname -T tablename -C col1,col2
+
+--dump dump all details
+
+-----------------------------------
+
+--file-read=/etc/passwd

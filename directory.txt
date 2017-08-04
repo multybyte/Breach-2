@@ -1,0 +1,14 @@
+using dirb
+
+---- Scanning URL: http://192.168.110.151/ ----
+==> DIRECTORY: http://192.168.110.151/blog/                                                           
+==> DIRECTORY: http://192.168.110.151/images/                                                         
++ http://192.168.110.151/server-status (CODE:403|SIZE:303)                                            
+                                                                                                      
+---- Entering directory: http://192.168.110.151/blog/ ----
++ http://192.168.110.151/blog/README (CODE:200|SIZE:721)                                              
+==> DIRECTORY: http://192.168.110.151/blog/smilies/                                                   
+==> DIRECTORY: http://192.168.110.151/blog/wysiwyg/
+
+----------------------------------------------------------------
+when see blog always see version what blog is so that find exploit

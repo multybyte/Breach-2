@@ -1,0 +1,5 @@
+  +  Copyright ©2006 Powered by www.blogphp.net
+
+searchsploit blogphp can find exploits
+
+
